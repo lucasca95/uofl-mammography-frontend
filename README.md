@@ -2,3 +2,10 @@
 Pending...
 
 ## Quick start
+
+--- Create/modify .env to have correct environment variable values
+
+--- Install node modules listed in package.json
+```bash
+npm install
+```

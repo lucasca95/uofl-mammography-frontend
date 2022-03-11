@@ -1,4 +1,5 @@
 import { BehaviorSubject } from "rxjs";
+import Environment from "../environment";
 
 // import i18n from "i18n";
 
@@ -26,7 +27,7 @@ export const AuthService = {
       body: JSON.stringify({ username, password }),
     };
 
-    return fetch(`http://172.22.37.18:5000/token/`, requestOptions).then(
+    return fetch(`${Environment.api}token/`, requestOptions).then(
       (response) => {
         if (response.ok) {
           return response.json().then((data) => {
@@ -46,7 +47,7 @@ export const AuthService = {
       body: JSON.stringify({ id: userId, key }),
     };
 
-    return fetch(`http://172.22.37.18:5000/api/confirm_email/`, requestOptions).then(
+    return fetch(`${Environment.api}api/confirm_email/`, requestOptions).then(
       (response) => {
         if (response.ok) {
           return response.json().then((data) => {
@@ -69,7 +70,7 @@ export const AuthService = {
         body: JSON.stringify({ token: token }),
       };
 
-      return fetch(`http://172.22.37.18:5000/api/token/verify/`, requestOptions).then(
+      return fetch(`${Environment.api}api/token/verify/`, requestOptions).then(
         (response) => {
           if (response.ok) {
             return response.json();
@@ -90,7 +91,7 @@ export const AuthService = {
         body: JSON.stringify({ refresh: refresh }),
       };
       const response = await fetch(
-        `http://172.22.37.18:5000/api/token/refresh/`,
+        `${Environment.api}api/token/refresh/`,
         requestOptions
       );
       if (response.status === 200) {
@@ -129,7 +130,7 @@ export const AuthService = {
           Authorization: "Bearer " + access,
         },
       };
-      return fetch(`http://172.22.37.18:5000/me/`, requestOptions)
+      return fetch(`${Environment.api}me/`, requestOptions)
         .then((response) => {
           if (response.ok) {
             response.json().then((data) => {

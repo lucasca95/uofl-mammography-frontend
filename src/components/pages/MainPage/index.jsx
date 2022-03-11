@@ -16,11 +16,7 @@ function MainPage(){
         }
       })
       .catch((e)=>{
-        // alert("An error has occurred");
-        console.warn(e);
-      })
-      .then(()=>{
-        alert("success");
+        alert("An error has occurred");
       });
     }
 

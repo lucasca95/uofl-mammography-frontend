@@ -9,3 +9,8 @@ Pending...
 ```bash
 npm install
 ```
+
+--- Start server
+```bash
+npm start
+```

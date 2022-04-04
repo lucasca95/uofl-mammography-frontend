@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import Layout from "../Layout";
 import {InputBase} from '@mui/material';
 import useStyles from "./styles";
+import ImagesListO from "../../organisms/ImagesListO";
 
 
 function MainTemplate(props) {
@@ -23,6 +24,10 @@ function MainTemplate(props) {
                         <button>Upload</button>
                     </div>
                 </form>
+                <div><br/></div>
+                <div className={classes.imagesList}>
+                    <ImagesListO />
+                </div>
             </div>
         </Layout>
     );

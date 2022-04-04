@@ -8,13 +8,21 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         display: "flex",
+        // backgroundColor: "rgb(30,50,80)",
+        // flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        "& input": {
+            // paddingLeft: "15%",
+            // marginTop: "5%",
+            // marginBottom: "5%",
+        }
+    },
+    imagesList: {
+        display:"flex",
         flexDirection: "column",
         alignItems: "center",
-        "& input": {
-            paddingLeft: "15%",
-            marginTop: "5%",
-            marginBottom: "5%",
-        }
+
     },
 }));
 

@@ -4,9 +4,10 @@ import Api from "./ApiService";
 export const ImageService = {
     sendImgPOST: async (img = null) => {
       const axios = require('axios').default;
-      // console.log("Al ImageService llega")
       // console.log(img);
       let url = `${Environment.api}img/`;
+      console.log(url);
+      // alert("Al ImageService llega")
       const formData = new FormData();
       formData.append("file", img);
       const getResult = await axios.post(`${url}`, formData, {

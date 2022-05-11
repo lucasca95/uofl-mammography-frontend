@@ -1,5 +1,6 @@
 import Environment from "../environment";
 import Api from "./ApiService";
+import fileDownload from "js-file-download";
 
 export const ImageService = {
     sendImgPOST: async (img = null) => {
@@ -15,6 +16,32 @@ export const ImageService = {
           'Content-Type': 'multipart/form-data'
         }
       });
+      return getResult.data;
+    },
+
+    searchImgGET: async (code = null) => {
+      const axios = require('axios').default;
+      let url = `${Environment.api}img/retrieveresults/`;
+      const formData = new FormData();
+      formData.append("imgcode", code);
+      let getResult = await axios.post(`${url}`, formData);
+      console.log('server responde...');
+      console.log(getResult.data);
+      alert(`check1`);
+      let imgInfo = {
+        'detection': -1,
+        'classification': -1,
+      }
+      if(getResult.data.status === 200){
+        imgInfo.detection = getResult.data.detection;
+        imgInfo.classification = getResult.data.classification;
+        url = `${Environment.api}img/retrieve/`;
+        getResult = await axios.post(`${url}`, formData, {responseType:'blob'});
+        fileDownload(getResult.data, 'file.png');
+      }
+      alert(`check2`);
+
+      
       return getResult.data;
     },
 

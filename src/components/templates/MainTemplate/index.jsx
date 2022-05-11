@@ -3,8 +3,7 @@ import {useForm} from 'react-hook-form';
 import Layout from "../Layout";
 import {InputBase} from '@mui/material';
 import useStyles from "./styles";
-import ImagesListO from "../../organisms/ImagesListO";
-import { gridSortColumnLookupSelector } from "@mui/x-data-grid";
+import ImagesSearchO from "../../organisms/ImageSearcherO";
 
 
 function MainTemplate(props) {
@@ -27,9 +26,12 @@ function MainTemplate(props) {
                     </div>
                 </form>
                 <div><br/></div>
-                <div className={classes.imagesList}>
-                    <ImagesListO />
+                <div>
+                    <ImagesSearchO searchImg={props.searchImg}/>
                 </div>
+                {/* <div className={classes.imagesList}>
+                    <ImagesListO />
+                </div> */}
             </div>
         </Layout>
     );

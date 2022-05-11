@@ -15,7 +15,7 @@ function App() {
     console.log(`Server is communicating with us\n${data}`);
   };
   const newImgMsg = (data)=>{
-    alert(`A new img has been added!`);
+    // alert(`A new img has been added!`);
   };
 
   useEffect(()=>{

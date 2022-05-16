@@ -7,11 +7,14 @@ import fileDownload from "js-file-download";
 
 function MainPage(){
   const [img, setImg] = useState(null);
+  const [email, setEmail] = useState(null);
   const [messageInfo, setMessageInfo] = useState({code:0, text: ''});
 
-    const updateImg = (image) => {
+    const updateImg = (dat) => {
+      const image = dat.file[0];
       setImg(image);
-      ImageService.sendImgPOST(image)
+      setEmail(dat.email);
+      ImageService.sendImgPOST(dat)
       .then((data)=>{
         if (data.status !== 200){
           console.warn(data);

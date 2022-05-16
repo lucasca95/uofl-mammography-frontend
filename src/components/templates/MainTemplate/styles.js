@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     form: {
         display: "flex",
         // backgroundColor: "rgb(30,50,80)",
-        // flexDirection: "column",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         "& input": {
@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
             // marginTop: "5%",
             // marginBottom: "5%",
         }
+    },
+    formEmailLayer:{
+        // backgroundColor: '#FFF'
+    },
+    formEmailInput:{
+        backgroundColor: '#FFF'
     },
     imagesList: {
         display:"flex",

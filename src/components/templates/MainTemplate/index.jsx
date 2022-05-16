@@ -5,13 +5,12 @@ import {InputBase} from '@mui/material';
 import useStyles from "./styles";
 import ImagesSearchO from "../../organisms/ImageSearcherO";
 
-
 function MainTemplate(props) {
     const {register, handleSubmit, resetField} = useForm();
     const classes = useStyles();
 
     const onSubmit = (data) => {
-        props.updateImg(data.file[0]);
+        props.updateImg(data);
         resetField('file');
     };
 
@@ -21,6 +20,13 @@ function MainTemplate(props) {
                 <h3>Choose a file to upload</h3>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={classes.form}>
+                        <div>
+                            Email&emsp;
+                            <InputBase className={classes.formEmailInput}
+                                type="email" {...register("email", 
+                                                { required: true})}
+                                name="email"/>
+                        </div>
                         <InputBase type="file" {...register("file", { required: true})} name="file"/>
                         <button>Upload</button>
                     </div>

@@ -12,7 +12,7 @@ function Layout(props) {
                     <img src="/UofLImg.png" alt="uoflimg"/>
                 </div>
                 <div className={classes.topBarRight}>
-                    <h1>University of Louisville</h1>
+                    <h1>AI for Health and Wellness</h1>
                 </div>
             </div>
             <div>

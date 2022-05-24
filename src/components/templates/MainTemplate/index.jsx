@@ -12,6 +12,7 @@ function MainTemplate(props) {
     const onSubmit = (data) => {
         props.updateImg(data);
         resetField('file');
+        // resetField('email');
     };
 
     return (

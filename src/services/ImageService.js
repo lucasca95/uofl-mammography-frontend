@@ -30,7 +30,7 @@ export const ImageService = {
       let getResult = await axios.post(`${url}`, formData);
       console.log('server responde...');
       console.log(getResult.data);
-      alert(`check1`);
+      // alert(`check1`);
       let imgInfo = {
         'detection': -1,
         'classification': -1,
@@ -39,10 +39,10 @@ export const ImageService = {
         imgInfo.detection = getResult.data.detection;
         imgInfo.classification = getResult.data.classification;
         url = `${Environment.api}img/retrieve/`;
-        getResult = await axios.post(`${url}`, formData, {responseType:'blob'});
-        fileDownload(getResult.data, 'file.png');
+        // getResult = await axios.post(`${url}`, formData, {responseType:'blob'});
+        // fileDownload(getResult.data, 'file.png');
       }
-      alert(`check2`);
+      // alert(`check2`);
 
       
       return getResult.data;

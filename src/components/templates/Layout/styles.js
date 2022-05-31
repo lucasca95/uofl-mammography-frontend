@@ -1,30 +1,38 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "rgb(230,230,230)",
-        height: "100vh",
+    root:{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '97vh',
+        // backgroundColor: '#444',
     },
-    topBar: {
+    toolBarRoot: {
         display: "flex",
-        justifyContent: "center",
-        backgroundColor: "rgb(230,100,100)",
-        width: "100vw",
-        height: "15%",
+        // flexDirection: "row",
+        // backgroundColor: '#444',
+        justifyContent: "space-between",
+        alignItems: 'center',
+        width: '100%',
+        height: '70px',
+        padding: '0 32px',
     },
-    topBarLeft: {
+    logo:{
         display: "flex",
-        width: "20%",
-        // backgroundColor: "rgb(100,100,180)",
-        // width: "10",
+        alignItems: 'center',
+        // backgroundColor: '#444',
+        width: '25%',
+        // padding: '0 32px',
+        justifyContent: "space-evenly",
     },
-    topBarRight: {
+    children: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '93vh',
+    },
+    userInfo:{
         display: "flex",
-        // backgroundColor: "rgb(100,180,100)",
-        width: "40%",
-        alignItems: "center",
+        alignItems: 'center',
     },
 }));
 

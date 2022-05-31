@@ -5,7 +5,7 @@ import TestService from "../../../services/TestService";
 import fileDownload from "js-file-download";
 // import {saveAs} from "file-saver";
 
-function MainPage(){
+function MammogramP(){
   const [img, setImg] = useState(null);
   const [email, setEmail] = useState(null);
   const [messageInfo, setMessageInfo] = useState({code:0, text: ''});
@@ -74,4 +74,4 @@ function MainPage(){
     );
   }
 
-export default MainPage;
+export default MammogramP;

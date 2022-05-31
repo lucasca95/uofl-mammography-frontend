@@ -7,6 +7,8 @@ const reducer = (state, action)=>{
     switch (action.type) {
         case "setSocket":
             return {...state, socket: action.payload};
+        case "setToken":
+            return {...state, token: action.payload};
         default:
             return state;
     }

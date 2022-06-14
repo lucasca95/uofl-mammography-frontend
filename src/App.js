@@ -1,60 +1,60 @@
 // base imports
 import Environment from './environment';
-import { useEffect, useState, useContext } from 'react';
-import {Context} from './common/ContextBase';
+import { useEffect, useState, useContext, createContext } from 'react';
+// import useStore, {Context} from './common/ContextBase';
 import io from 'socket.io-client';
 import { CircularProgress } from '@mui/material';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import Theme from './theme/theme';
 
 // import pages
 import LoginP from './components/pages/LoginP';
 import ImagesP from './components/pages/ImagesP';
+import { useStore } from './common/Context';
 
 
 function App() {
-  const [socket, setSocket] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
-  const actionTest = (data)=>{
-    console.log(`Server is communicating with us\n${data}`);
-  };
-  const newImgMsg = (data)=>{
-    // alert(`A new img has been added!`);
-  };
-
+  const [socket, setSocket] = useState(true);
+  const [load, setLoad] = useState(false);
+  const [{token}, dispatch] = useStore();
+  
   useEffect(()=>{
     const newSocket = io(Environment.api);
-    setSocket(newSocket);
+    // setSocket(newSocket);
+    setLoad(true);
     return () => newSocket.close();
-  },[setToken]);
+  },[]);
 
   // (socket) && socket.on('test', ()=>{
-  //   actionTest();
+  //   alert(`Test action`);
   // });
   // (socket) && socket.on('new', ()=>{
-  //   newImgMsg();
+  //   alert(`New action`);
   // });
-  
-  // if (!token){
-  //   return <LoginP setToken={setToken} />
-  // } else {
-  //   // console.log(`Erase token: ${token}`);
-  //   // localStorage.removeItem('token'); setToken(null);
-  // }
+
+  // // localStorage.removeItem('token'); setToken(null);
+  if (!token){
+    return<LoginP />
+  }
 
   return (socket) 
   ?
     (
-      <Context>
+      <Theme>
+        {load ? (
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<LoginP />} />
+              <Route path="/*" element={<ImagesP />} />
               {/* <Route path="/login" element={<LoginP />} /> */}
-              {/* <Route path="/mammograms/login" element={<LoginP setTokenFunction={setToken} />}/> */}
             </Routes>
           </BrowserRouter>
+        )
+        :
+          <></>
+        }
           {/* {socket ? <MammogramP /> : <div>Error#90 has occured</div>} */}
-      </Context>
+      </Theme>
     )
   :
     (<CircularProgress color="inherit" />);

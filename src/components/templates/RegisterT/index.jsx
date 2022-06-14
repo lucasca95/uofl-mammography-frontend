@@ -1,17 +1,11 @@
+import { Button, CircularProgress, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, Input, InputLabel, Paper, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { 
-    Button,
-    CircularProgress,
-    FormControl,
-    FormGroup,
-    Paper,
-    TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
+import { useStore } from '../../../common/Context';
 import Layout from '../Layout';
 import useStyles from "./styles";
-import { useStore } from '../../../common/Context';
 
-function LoginT({
+function RegisterT({
     validatingCredentials,
     onSubmit
 }) {
@@ -20,14 +14,18 @@ function LoginT({
     const [{needToRegister}, dispatch] = useStore();
 
     const submitHandler = (data)=>{
-        resetField('userEmail');resetField('userPassword');
+        // console.log(data);
+        resetField('userFirstName'); 
+        resetField('userLastName'); 
+        resetField('userEmail'); 
+        resetField('userPassword'); 
         onSubmit(data);
     }
 
     return (
         <Layout>
             <div className={classes.root}>
-                <h1>User login</h1>
+                <h1>Create an account</h1>
                 <Paper className={classes.paper} sx={{padding: 4}}>
                     {(validatingCredentials) ? 
                         <div className={classes.loading}>
@@ -36,6 +34,26 @@ function LoginT({
                     :
                     <form onSubmit={handleSubmit(submitHandler)}>
                         <FormGroup>
+                            <FormControl variant='filled' sx={{padding:1}}>
+                                <TextField
+                                    // required
+                                    name='userFirstName'
+                                    label="First name"
+                                    required
+                                    {...register("userFirstName")}
+                                    autoComplete='off'
+                                />
+                            </FormControl>
+                            <FormControl variant='filled' sx={{padding:1}}>
+                                <TextField
+                                    // required
+                                    name='userLastName'
+                                    label="Last name"
+                                    required
+                                    {...register("userLastName")}
+                                    autoComplete='off'
+                                />
+                            </FormControl>
                             <FormControl variant='filled' sx={{padding:1}}>
                                 <TextField
                                     // required
@@ -58,29 +76,26 @@ function LoginT({
                                 />
                             </FormControl>
                             <FormControl variant='filled' sx={{padding:1}}>
-                                <Button type='submit' variant="contained">LOGIN</Button>
+                                <Button type='submit' variant="contained">REGISTER</Button>
                             </FormControl>
                             <FormControl variant='filled' sx={{padding:1}}>
-                                <Button variant="outlined" 
-                                // type='submit'
+                                <div style={{textAlign:'center', marginBottom: '8px'}}>
+                                    You already have an account?
+                                </div>
+                                <Button variant="outlined"
                                 onClick={()=>{
                                     dispatch({
                                         type: 'setNeedToRegister',
-                                        payload: true
+                                        payload: false
                                     });
-                                }}
-                                >REGISTER</Button>
-                            </FormControl>
-                            <FormControl variant='filled' sx={{padding:1}}>
-                                <Button>I FORGOT MY PASSWORD</Button>
+                                }}>LOGIN</Button>
                             </FormControl>
                         </FormGroup>
                     </form>
                     }
                 </Paper>
             </div>
-            
         </Layout>
     );
 }
-export default LoginT;
+export default RegisterT;

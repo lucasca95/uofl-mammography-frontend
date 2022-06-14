@@ -1,19 +1,18 @@
 import Environment from "../environment";
-import Api from "./ApiService";
-import fileDownload from "js-file-download";
 
-export const LoginService = {
+export const RegisterService = {
   // INPUT -> userData={
+  //  'userFirstName: sth,
+  //  'userLastName': sth,
   //  'userEmail': sth@mail.com,
   //  'userPassword': sth1234,
   // }
-  loginPOST: async (userData = null) => {
+  registerPOST: async (userData = null) => {
     const axios = require('axios').default;
-    let url = `${Environment.api}login/`;
-    console.log(`About to send:`);
-    console.log(`${userData}`);
-    console.log(url);
+    let url = `${Environment.api}register/`;
     const formData = new FormData();
+    formData.append('userFirstName', userData.userFirstName);
+    formData.append('userLastName', userData.userLastName);
     formData.append('userEmail', userData.userEmail);
     formData.append('userPassword', userData.userPassword);
     const getResult = await axios.post(`${url}`, formData);
@@ -21,4 +20,4 @@ export const LoginService = {
   },
 };
   
-export default LoginService;
+export default RegisterService;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { 
     AppBar, 
     Avatar,
@@ -11,10 +11,15 @@ import {
     Toolbar } from "@mui/material";
 import useStyles from "./styles";
 import { AccountCircle } from "@mui/icons-material";
+import { Routes, useNavigate } from "react-router-dom";
+import { useStore } from "../../../common/Context";
 
 
 function Layout(props) {
     const classes = useStyles();
+    const [{user}, dispatch] = useStore();
+    // const {navigator} = useNavigate();
+
     const [anchorEl, setAnchorEl] = useState(null);
     const theme = createTheme({
         palette: {
@@ -27,10 +32,20 @@ function Layout(props) {
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = (d) => {
-        console.log(d);
+    const handleClose = () => {
         setAnchorEl(null);
-      };
+    };
+    const handleProfile = () => {
+        handleClose();
+        alert(`You are logged in as "user@e-mail.com"`);
+    };
+    const handleLogout = () => {
+        handleClose();
+        dispatch({
+            type: 'clearContext'
+        })
+        // window.location.href = "/";
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -50,38 +65,43 @@ function Layout(props) {
                                         src="/cardinal_face.png" 
                                     />
                                     <h3>University of Louisville</h3>
+                                    {(localStorage.getItem('user')) && <div>asd</div>}
                                 </div>
                                 <div className={classes.userInfo}>
-                                    <span>user@e-mail.com</span>
-                                    <IconButton
-                                        size="large"
-                                        edge="center"
-                                        color="inherit"
-                                        aria-label="menu"
-                                        sx={{ mr: 2 }}
-                                        onClick={handleMenu}
-                                    >
-                                        <AccountCircle />
-                                    </IconButton>
-                                    <Menu
-                                        id="menu-appbar"
-                                        anchorEl={anchorEl}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'right',
-                                        }}
-                                        keepMounted
-                                        transitionDuration={250}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleClose}
-                                    >
-                                        <MenuItem onClick={()=>{alert(`You are logged in as "user@e-mail.com"`)}}>Profile</MenuItem>
-                                        <MenuItem onClick={()=>{handleClose('Op2')}}>My account</MenuItem>
-                                    </Menu>
+                                    {(user) && 
+                                        <>
+                                        <span>{user}</span>
+                                        <IconButton
+                                            size="large"
+                                            edge="end"
+                                            color="inherit"
+                                            aria-label="menu"
+                                            sx={{ mr: 2 }}
+                                            onClick={handleMenu}
+                                        >
+                                            <AccountCircle />
+                                        </IconButton>
+                                        <Menu
+                                            id="menu-appbar"
+                                            anchorEl={anchorEl}
+                                            anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'right',
+                                            }}
+                                            keepMounted
+                                            transitionDuration={250}
+                                            transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'right',
+                                            }}
+                                            open={Boolean(anchorEl)}
+                                            onClose={handleClose}
+                                        >
+                                            <MenuItem onClick={()=>{handleProfile()}}>Profile</MenuItem>
+                                            <MenuItem onClick={()=>{handleLogout()}}>Log out</MenuItem>        
+                                        </Menu>
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </Toolbar>

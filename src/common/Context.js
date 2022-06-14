@@ -1,41 +1,45 @@
-import React, { createContext, useContext, useReducer } from 'react';
-import PropTypes from "prop-types";
+import { createContext, useContext, useReducer } from "react";
 
-const GlobalStorage = createContext();
+const UserContext = createContext();
 
-const reducer = (state, action)=>{
+export const reducer = (state, action) => {
     switch (action.type) {
-        case "setSocket":
-            return {...state, socket: action.payload};
+        case "setNeedToRegister":
+            return {...state, needToRegister: action.payload };
+        case "setAux":
+            return {...state, aux: action.payload };
+        case "deleteAux":
+            delete state.aux;
         case "setToken":
-            return {...state, token: action.payload};
+            return {...state, token: action.payload };
+        case "setUser":
+            return {...state, user: action.payload };            
+        case "clearContext":
+            return { state: {} };
         default:
             return state;
     }
 }
+
 const persist = (reducer) => {
     return (state, action) => {
-      const newState = reducer(state, action);
-      localStorage.setItem("store", JSON.stringify(newState));
-      return newState;
+        const newState = reducer(state, action);
+        localStorage.setItem("store", JSON.stringify(newState));
+        return newState;
     };
 };
 
-export const Context = ({children})=>{
-    // get localStorage(store) as cache
+UserContext.displayName = 'UserStore';
+
+export const useStore = () => useContext(UserContext);
+
+export const UserContextProvider = ({children}) => {
+    const aux = true;
     const cache = localStorage.getItem("store");
-    // if it does not exist yet, create an empty object
     const initialState = cache ? JSON.parse(cache) : {};
-
-    return <GlobalStorage.Provider value={useReducer(persist(reducer), initialState)}>
-        {children}
-    </GlobalStorage.Provider>
-}
-
-Context.propTypes = {
-    children: PropTypes.element,
+    return (
+        <UserContext.Provider value={useReducer(persist(reducer), initialState)}>
+            {children}
+        </UserContext.Provider>
+    );
 };
-
-export const useStore = () =>{return useContext(GlobalStorage)};
-
-export default useStore;

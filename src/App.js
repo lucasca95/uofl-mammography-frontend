@@ -11,19 +11,21 @@ import Theme from './theme/theme';
 // import pages
 import LoginP from './components/pages/LoginP';
 import ImagesP from './components/pages/ImagesP';
+import MammogramP from './components/pages/MammogramP';
 import { useStore } from './common/Context';
-
+import TokenVerificationP from './components/pages/TokenVerificationP';
 
 function App() {
-  const [socket, setSocket] = useState(true);
+  // const [socket, setSocket] = useState(true);
   const [load, setLoad] = useState(false);
   const [{token}, dispatch] = useStore();
+  const url = window.location.href.split("/")[3];
   
   useEffect(()=>{
-    const newSocket = io(Environment.api);
+    // const newSocket = io(Environment.api);
     // setSocket(newSocket);
     setLoad(true);
-    return () => newSocket.close();
+    // return () => newSocket.close();
   },[]);
 
   // (socket) && socket.on('test', ()=>{
@@ -33,20 +35,20 @@ function App() {
   //   alert(`New action`);
   // });
 
-  // // localStorage.removeItem('token'); setToken(null);
-  if (!token){
+  if ((!token)){
     return<LoginP />
   }
 
-  return (socket) 
+  // return (socket) 
+  return (true)
   ?
     (
       <Theme>
         {load ? (
           <BrowserRouter>
             <Routes>
-              <Route path="/*" element={<ImagesP />} />
-              {/* <Route path="/login" element={<LoginP />} /> */}
+              <Route path="/" element={<ImagesP />} />
+              {/* <Route path="/verifytoken/:token" element={<TokenVerificationP />} /> */}
             </Routes>
           </BrowserRouter>
         )

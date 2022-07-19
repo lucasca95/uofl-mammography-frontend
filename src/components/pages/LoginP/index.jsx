@@ -13,12 +13,12 @@ function LoginP({
     const onSubmit = (data) => {
         setValidatingCredentials(true);
         if (needToRegister) {
-            // console.log(data);
+            alert(`We are going to register!`);
             RegisterService.registerPOST(data)
             .then((response)=>{
+                alert(`Good response`);
                 console.log(response);
                 if (response.status === 200) {
-                    alert(response.message);
                     dispatch({
                         type: 'setNeedToRegister',
                         payload: false
@@ -28,9 +28,11 @@ function LoginP({
                 }
             })
             .catch((error)=>{
+                alert(`Bad response`);
                 console.warn(error);
             })
             .then(()=>{
+                alert(`We continue`);
                 setValidatingCredentials(false);
             })
         } else {

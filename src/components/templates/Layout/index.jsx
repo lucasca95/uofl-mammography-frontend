@@ -11,7 +11,6 @@ import {
     Toolbar } from "@mui/material";
 import useStyles from "./styles";
 import { AccountCircle } from "@mui/icons-material";
-import { Routes, useNavigate } from "react-router-dom";
 import { useStore } from "../../../common/Context";
 
 
@@ -37,7 +36,7 @@ function Layout(props) {
     };
     const handleProfile = () => {
         handleClose();
-        alert(`You are logged in as "user@e-mail.com"`);
+        alert(`You are logged in as ${user}`);
     };
     const handleLogout = () => {
         handleClose();

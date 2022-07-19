@@ -5,12 +5,8 @@ import fileDownload from "js-file-download";
 export const ImageService = {
     sendImgPOST: async (data = null) => {
       const axios = require('axios').default;
-      console.log(data);
-      const img = data.file[0];
-      // console.log(img);
+      const img = data.image;
       let url = `${Environment.api}img/`;
-      console.log(url);
-      // alert("Al ImageService llega")
       const formData = new FormData();
       formData.append("file", img);
       formData.append("email", data.email);
@@ -22,29 +18,36 @@ export const ImageService = {
       return getResult.data;
     },
 
-    searchImgGET: async (code = null) => {
+    searchImgPOST: async (code = null) => {
       const axios = require('axios').default;
-      let url = `${Environment.api}img/retrieveresults/`;
+      let url = `${Environment.api}img/retrieve/`;
       const formData = new FormData();
       formData.append("imgcode", code);
-      let getResult = await axios.post(`${url}`, formData);
+      let getResult = await axios.post(`${url}`, formData, {responseType:'blob'});
       console.log('server responde...');
       console.log(getResult.data);
-      // alert(`check1`);
-      let imgInfo = {
-        'detection': -1,
-        'classification': -1,
-      }
-      if(getResult.data.status === 200){
-        imgInfo.detection = getResult.data.detection;
-        imgInfo.classification = getResult.data.classification;
-        url = `${Environment.api}img/retrieve/`;
-        // getResult = await axios.post(`${url}`, formData, {responseType:'blob'});
-        // fileDownload(getResult.data, 'file.png');
-      }
-      // alert(`check2`);
+      alert(`check1`);
+      fileDownload((getResult.data), 'file.png');
+      // let imgInfo = {
+      //   'detection': -1,
+      //   'classification': -1
+      // }
+      // if(getResult.data.status === 200){
+      //   imgInfo.detection = getResult.data.detection;
+      //   imgInfo.classification = getResult.data.classification;
+      //   url = `${Environment.api}img/retrieve/`;
+      //   // getResult = await axios.post(`${url}`, formData, {responseType:'blob'});
+      //   // fileDownload(getResult.data, 'file.png');
+      // }
+      return getResult.data;
+    },
 
-      
+    imageListPOST: async (user_email = null) => {
+      const axios = require('axios').default;
+      let url = `${Environment.api}images/`;
+      const formData = new FormData();
+      formData.append("user_email", user_email)
+      const getResult = await axios.post(`${url}`, formData);
       return getResult.data;
     },
 

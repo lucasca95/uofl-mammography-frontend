@@ -6,30 +6,30 @@ import fileDownload from "js-file-download";
 // import {saveAs} from "file-saver";
 
 function MammogramP(){
-  const [img, setImg] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [messageInfo, setMessageInfo] = useState({code:0, text: ''});
+    const [img, setImg] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [messageInfo, setMessageInfo] = useState({code:0, text: ''});
 
     const updateImg = (dat) => {
-      const image = dat.file[0];
-      setImg(image);
-      setEmail(dat.email);
-      ImageService.sendImgPOST(dat)
-      .then((data)=>{
-        if (data.status !== 200){
-          console.warn(data);
-          setMessageInfo({code:2, text: 'Something went wrong'});
-          alert('Something went wrong');
-        }else{
-          setMessageInfo({code:1, text: `Success. Processing code: ${data.code}`});
-          alert(`Image has been uploaded successfully.
-          Processing code: #${data.code}`);
-        }
-      })
-      .catch((e)=>{
-        console.log(e);
-        alert("An error has occurred in ImageService");
-      });
+        const image = dat.file[0];
+        setImg(image);
+        setEmail(dat.email);
+        ImageService.sendImgPOST(dat)
+        .then((data) => {
+            if (data.status !== 200){
+                console.warn(data);
+                setMessageInfo({code:2, text: 'Something went wrong'});
+                alert('Something went wrong');
+            } else {
+                setMessageInfo({code:1, text: `Success. Processing code: ${data.code}`});
+                alert(`Image has been uploaded successfully.
+                Processing code: #${data.code}`);
+            }
+        })
+        .catch((e)=>{
+            console.log(e);
+            alert("An error has occurred in ImageService");
+        });
     };
 
     const searchImg = (code) => { 
@@ -62,7 +62,7 @@ function MammogramP(){
     }, []);
     return (
         <div>
-          <MainTemplate 
+          <MainTemplate
             messageInfo={messageInfo}
             img={img}
             searchImg={searchImg}
@@ -72,6 +72,6 @@ function MammogramP(){
           } */}
         </div>
     );
-  }
+}
 
 export default MammogramP;

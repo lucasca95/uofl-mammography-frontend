@@ -14,6 +14,7 @@ import ImagesP from './components/pages/ImagesP';
 import MammogramP from './components/pages/MammogramP';
 import { useStore } from './common/Context';
 import TokenVerificationP from './components/pages/TokenVerificationP';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
   // const [socket, setSocket] = useState(true);
@@ -47,6 +48,8 @@ function App() {
         {load ? (
           <BrowserRouter>
             <Routes>
+              {/* <Route element={<ProtectedRoute reqPermission={true} token={token} />}>
+              </Route> */}
               <Route path="/" element={<ImagesP />} />
               {/* <Route path="/verifytoken/:token" element={<TokenVerificationP />} /> */}
             </Routes>

@@ -1,68 +1,60 @@
-// base imports
-import Environment from './environment';
-import { useEffect, useState, useContext, createContext } from 'react';
-// import useStore, {Context} from './common/ContextBase';
-import io from 'socket.io-client';
+import { useEffect, useState } from 'react';
 import { CircularProgress } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Theme from './theme/theme';
+import ProtectedRoute from './routes/ProtectedRoute';
+import { useStore } from './common/Context';
 
-// import pages
 import LoginP from './components/pages/LoginP';
 import ImagesP from './components/pages/ImagesP';
-import MammogramP from './components/pages/MammogramP';
-import { useStore } from './common/Context';
-import TokenVerificationP from './components/pages/TokenVerificationP';
-import ProtectedRoute from './routes/ProtectedRoute';
+import EmailVerificationP from './components/pages/EmailVerificationP';
+import Layout from './components/templates/Layout';
 
 function App() {
-  // const [socket, setSocket] = useState(true);
-  const [load, setLoad] = useState(false);
-  const [{token}, dispatch] = useStore();
-  const url = window.location.href.split("/")[3];
+  const [{user}, dispatch] = useStore();
+  const [pageIsLoading, setPageIsLoading] = useState(true);
   
   useEffect(()=>{
-    // const newSocket = io(Environment.api);
-    // setSocket(newSocket);
-    setLoad(true);
-    // return () => newSocket.close();
+    setPageIsLoading(false);
+    // dispatch({
+    //   type: 'setUser',
+    //   payload: {
+    //     email: 'lucas.camino@louisville.edu',
+    //     token: true
+    //   }
+    // });
   },[]);
 
-  // (socket) && socket.on('test', ()=>{
-  //   alert(`Test action`);
-  // });
-  // (socket) && socket.on('new', ()=>{
-  //   alert(`New action`);
-  // });
-
-  if ((!token)){
-    return<LoginP />
-  }
-
-  // return (socket) 
-  return (true)
+  return (pageIsLoading)
   ?
-    (
-      <Theme>
-        {load ? (
-          <BrowserRouter>
-            <Routes>
-              {/* <Route element={<ProtectedRoute reqPermission={true} token={token} />}>
-              </Route> */}
-              <Route path="/" element={<ImagesP />} />
-              {/* <Route path="/verifytoken/:token" element={<TokenVerificationP />} /> */}
-            </Routes>
-          </BrowserRouter>
-        )
-        :
-          <></>
-        }
-          {/* {socket ? <MammogramP /> : <div>Error#90 has occured</div>} */}
-      </Theme>
-    )
+    <CircularProgress color="inherit" />
   :
-    (<CircularProgress color="inherit" />);
+    <Theme>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={
+              <ProtectedRoute>
+                <ImagesP />
+              </ProtectedRoute>
+            } />
+            <Route path="/home" element={
+              <ProtectedRoute>
+                <ImagesP />
+              </ProtectedRoute>
+            } />
+            <Route path="/login" element={<LoginP />} />
+            <Route path="/verifyemail/:token/:email" element={<EmailVerificationP />} />
+            <Route path="*" element={
+              <div>
+                <h1 style={{'textAlign': 'center'}}>Ups!</h1>
+                <h2 style={{'textAlign': 'center'}}>404: Page not found</h2>
+              </div>
+            } />
+          </Routes>
+        </BrowserRouter>
+    </Theme>
+  ;
 }
 
 export default App;

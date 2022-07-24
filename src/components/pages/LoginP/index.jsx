@@ -7,17 +7,19 @@ import RegisterT from '../../templates/RegisterT';
 
 function LoginP({
 }){
+    // used to show loading circle when communicating with backend
     const [validatingCredentials, setValidatingCredentials] = useState(false);
-    const [{user, token, needToRegister}, dispatch] = useStore();
+
+    // get {user} information from context
+    const [{user, needToRegister}, dispatch] = useStore();
 
     const onSubmit = (data) => {
         setValidatingCredentials(true);
         if (needToRegister) {
-            alert(`We are going to register!`);
             RegisterService.registerPOST(data)
             .then((response)=>{
-                alert(`Good response`);
                 console.log(response);
+                alert('Check your e-mail to validate your account.');
                 if (response.status === 200) {
                     dispatch({
                         type: 'setNeedToRegister',
@@ -32,7 +34,6 @@ function LoginP({
                 console.warn(error);
             })
             .then(()=>{
-                alert(`We continue`);
                 setValidatingCredentials(false);
             })
         } else {
@@ -43,9 +44,15 @@ function LoginP({
                     type: 'setToken',
                     payload: response.token
                 });
+
+                // Revisar la linea que sigue
                 dispatch({
                     type: 'setUser',
-                    payload: data.userEmail
+                    payload:{ 
+                        email: 'lucas.camino@louisville.edu',
+                        token: true
+                    }
+                    // payload: data.userEmail
                 });
             })
             .catch((error)=>{console.warn(error)})
@@ -55,9 +62,6 @@ function LoginP({
         }
     }
 
-    useEffect(()=>{
-        
-    },[]);
     return (
         <div>
             {needToRegister 

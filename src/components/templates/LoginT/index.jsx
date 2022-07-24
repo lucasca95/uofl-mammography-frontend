@@ -78,8 +78,7 @@ function LoginT({
                     </form>
                     }
                 </Paper>
-            </div>
-            
+            </div>  
         </Layout>
     );
 }

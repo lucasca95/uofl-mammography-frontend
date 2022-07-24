@@ -1,36 +1,28 @@
-import { Redirect, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useStore } from './../common/Context';
 
 const ProtectedRoute = ({
-  component: Component,
-  redirectUrl,
-  user,
-  hasPermissions = true,
-  ...rest
+  redirectPath = '/login',
+  children
 }) => {
+
+  const [{user}, dispatch] = useStore();
+
+  if (!user) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
   return (
-    <Route
-      {...rest}
-      render={(props) => {
-        return user && hasPermissions ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: redirectUrl || "/login",
-            }}
-          />
-        );
-      }}
-    />
+    <div>
+      {children}
+    </div>
   );
 };
 
 ProtectedRoute.propTypes = {
-  component: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-  redirectUrl: PropTypes.string,
-  user: PropTypes.any,
-  hasPermissions: PropTypes.bool,
+  redirectPath: PropTypes.string,
+  children: PropTypes.element,
 };
 
 export default ProtectedRoute;

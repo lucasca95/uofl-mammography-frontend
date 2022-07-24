@@ -17,7 +17,6 @@ import { useStore } from "../../../common/Context";
 function Layout(props) {
     const classes = useStyles();
     const [{user}, dispatch] = useStore();
-    // const {navigator} = useNavigate();
 
     const [anchorEl, setAnchorEl] = useState(null);
     const theme = createTheme({
@@ -64,12 +63,12 @@ function Layout(props) {
                                         src="/cardinal_face.png" 
                                     />
                                     <h3>University of Louisville</h3>
-                                    {(localStorage.getItem('user')) && <div>asd</div>}
+                                    {/* {(localStorage.getItem('user')) && <div>asd</div>} */}
                                 </div>
                                 <div className={classes.userInfo}>
                                     {(user) && 
                                         <>
-                                        <span>{user}</span>
+                                        <span>{user.email}</span>
                                         <IconButton
                                             size="large"
                                             edge="end"
@@ -111,23 +110,6 @@ function Layout(props) {
                 </div>
             </Container>
         </ThemeProvider>
-        // <div className={classes.root}>
-        //     <div className={classes.topBar}>
-        //         <div className={classes.topBarLeft}>
-        //             <img src="/UofLImg.png" alt="uoflimg"/>
-        //         </div>
-        //         <div className={classes.topBarRight}>
-        //             <h1>AI for Health and Wellness</h1>
-        //         </div>
-        //     </div>
-        //     <div>
-                
-        //         <h1>Images Upload Service</h1>
-        //         <div>
-        //             {props.children}
-        //         </div>
-        //     </div>
-        // </div>
     );
 }
 export default Layout;

@@ -5,10 +5,9 @@ import fileDownload from "js-file-download";
 export const ImageService = {
     sendImgPOST: async (data = null) => {
       const axios = require('axios').default;
-      const img = data.image;
       let url = `${Environment.api}img/`;
       const formData = new FormData();
-      formData.append("file", img);
+      formData.append("file", data.image);
       formData.append("email", data.email);
       const getResult = await axios.post(`${url}`, formData, {
         headers: {

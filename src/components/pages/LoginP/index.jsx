@@ -13,6 +13,9 @@ function LoginP({
     // get {user} information from context
     const [{user, needToRegister}, dispatch] = useStore();
 
+    if (user){
+        window.location.href='/';
+    }
     const onSubmit = (data) => {
         setValidatingCredentials(true);
         if (needToRegister) {
@@ -40,20 +43,16 @@ function LoginP({
             LoginService.loginPOST(data)
             .then((response)=>{
                 console.log(response);
-                dispatch({
-                    type: 'setToken',
-                    payload: response.token
-                });
-
                 // Revisar la linea que sigue
                 dispatch({
                     type: 'setUser',
                     payload:{ 
-                        email: 'lucas.camino@louisville.edu',
-                        token: true
+                        email: response.email,
+                        token: response.token
                     }
                     // payload: data.userEmail
                 });
+                window.location.href='/';
             })
             .catch((error)=>{console.warn(error)})
             .then(()=>{

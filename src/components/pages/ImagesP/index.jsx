@@ -13,7 +13,7 @@ function ImagesP(){
     const uploadImg = (dat)=>{
         const image = dat.file[0];
         // setImageList(image);
-        const data = {image, email: user}
+        const data = {image, email: user.email}
         ImageService.sendImgPOST(data)
         .then((data)=>{
             if(data.status !== 200){
